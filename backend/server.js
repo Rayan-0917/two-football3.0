@@ -7,7 +7,17 @@ import newsRoutes from './routes/newsRoutes.js';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  "https://two-football3-0.vercel.app",
+  "http://localhost:5173", // for local dev
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use("/api/football", footballRoutes);
