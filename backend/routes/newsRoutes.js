@@ -12,7 +12,7 @@ const LEAGUE_NEWS_NAMES = {
   2: "Champions League",
 };
 
-// Fetch general football news
+
 router.get("/football", async (req, res) => {
   try {
     const response = await fetch(
@@ -31,7 +31,7 @@ router.get("/football", async (req, res) => {
   }
 });
 
-// Fetch league-specific news by ID
+
 router.get("/league/:id", async (req, res) => {
   const leagueId = req.params.id;
   const leagueName = LEAGUE_NEWS_NAMES[leagueId];
@@ -58,7 +58,7 @@ router.get("/league/:id", async (req, res) => {
   }
 });
 
-// NEW: Fetch team-specific news by name
+
 router.get("/team/:name", async (req, res) => {
     const teamName = req.params.name;
     
@@ -84,7 +84,7 @@ router.get("/team/:name", async (req, res) => {
     }
 });
 
-// NEW: Fetch player-specific news by name
+
 router.get("/player/:name", async (req, res) => {
     const playerName = req.params.name;
 

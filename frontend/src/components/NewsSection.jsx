@@ -24,9 +24,9 @@ export default function NewsSection() {
     return <p className="text-gold-400 text-center mt-4 font-semibold animate-pulse">Loading news...</p>;
 
   return (
-    // UPDATED CSS: Wider sidebar, deeper background, border, better max-height
+   
     <aside className="w-90 bg-neutral-800 text-white p-6 rounded-2xl scrollbar-none shadow-xl border border-neutral-700 max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-800">
-      {/* UPDATED CSS: Title highlight */}
+   
       <h2 className="text-xl font-bold mb-4 border-b border-gold-500 pb-3 text-gold-400">
         Latest Football News
       </h2>
@@ -37,7 +37,7 @@ export default function NewsSection() {
         {news.map((article, idx) => (
           <li
             key={idx}
-            // UPDATED CSS: More defined hover state, link opens in new tab
+           
             className="hover:bg-neutral-700 p-3 rounded-lg cursor-pointer transition duration-200 border border-neutral-700"
             onClick={() => window.open(article.url, '_blank')}
           >

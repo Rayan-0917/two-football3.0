@@ -1,4 +1,4 @@
-// leaguePage.jsx (Corrected)
+
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -11,7 +11,7 @@ import {
 export default function LeaguePage() {
   const { leagueId } = useParams();
   const [standings, setStandings] = useState([]);
-  const [leagueInfo, setLeagueInfo] = useState(null); // NEW: State for league header data
+  const [leagueInfo, setLeagueInfo] = useState(null); 
   const [scorers, setScorers] = useState([]);
   const [assisters, setAssisters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,16 +23,15 @@ export default function LeaguePage() {
         getTopScorers(leagueId),
         getTopAssisters(leagueId),
       ]);
-      
-      // FIX: The backend now returns { standings: [...], leagueInfo: {...} }
+
       setStandings(tableData.standings || []);
-      setLeagueInfo(tableData.leagueInfo || null); // FIX: Set league info separately
+      setLeagueInfo(tableData.leagueInfo || null); 
       setScorers(scorersData.slice(0, 10));
       setAssisters(assistersData.slice(0, 10));
       setLoading(false);
     };
 
-    // store league id for use in TeamPage
+   
     if (leagueId) localStorage.setItem("selectedLeagueId", leagueId);
 
     fetchLeagueData();
@@ -41,13 +40,12 @@ export default function LeaguePage() {
   if (loading)
     return <p className="text-center text-gray-400 p-6 bg-neutral-900 min-h-screen">Loading league data...</p>;
 
-  // FIX: leagueInfo is now retrieved directly from state
-  // const leagueInfo = standings.length > 0 ? standings[0].league : null; // REMOVE THIS LINE
+ 
 
   return (
     <div className="p-4 sm:p-6 bg-neutral-900 min-h-screen text-white">
       {/* League Header */}
-      {leagueInfo && ( // Use the new leagueInfo state
+      {leagueInfo && ( 
         <div className="flex flex-col items-center mb-10 bg-neutral-800 p-6 rounded-xl shadow-lg border border-neutral-700">
           <img
             src={leagueInfo.logo}
@@ -83,7 +81,7 @@ export default function LeaguePage() {
               </thead>
               <tbody>
                 {standings.map((team, i) => {
-                  // Determine background color based on rank (simplified for example)
+                 
                   let rowClass = "bg-neutral-700 hover:bg-neutral-700/80 transition duration-150 ease-in-out";
                   let rankColor = 'text-gray-300';
                   
@@ -160,17 +158,17 @@ export default function LeaguePage() {
   );
 }
 
-// Helper component for Top Scorers/Assisters tables (No changes needed here)
+
 function StatTable({ title, data, statKey, statLabel, statColor, linkClass, leagueId }) {
   const getValue = (player) => {
-    // Safely extract the nested stat value
+ 
     const keys = statKey.split('.');
     let value = player.statistics[0];
     for (const key of keys) {
       if (value && value[key] !== undefined) {
         value = value[key];
       } else {
-        return 0; // Default to 0 if path is invalid/null
+        return 0; 
       }
     }
     return value;

@@ -41,7 +41,7 @@ export const getPlayerDetails = async (playerId, season) => {
   return await res.json();
 };
 
-// NEW API FUNCTIONS
+
 
 export const getPlayerTransfers = async (playerId) => {
   const res = await fetch(`${BASE_URL}/player/${playerId}/transfers`);
@@ -53,7 +53,7 @@ export const getPlayerTrophies = async (playerId) => {
   return await res.json();
 };
 
-// END NEW API FUNCTIONS
+
 
 export const getMatchDetails = async (fixtureId) => {
   const res = await fetch(`${BASE_URL}/match/${fixtureId}`);

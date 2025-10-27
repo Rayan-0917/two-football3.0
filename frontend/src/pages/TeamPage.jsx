@@ -8,14 +8,12 @@ import {
   
 } from "../api/footballApi";
 
-// Import news API functions
-import { getTeamNewsByName, getLeagueNewsById } from "../api/newsApi"; // Assuming newsApi.js is in "../api/"
 
-// Import the NewsDisplay component
-import NewsDisplay from "../components/NewsDisplay"; // Assuming NewsDisplay.jsx is in "../components/"
+import { getTeamNewsByName, getLeagueNewsById } from "../api/newsApi";
+
+import NewsDisplay from "../components/NewsDisplay"; 
 
 
-// --- Helper Components (to be created in separate files, but shown inline for completeness) ---
 
 const FLAG_MAP = {
     England: "gb", France: "fr", Spain: "es", Germany: "de", Italy: "it", Brazil: "br", Argentina: "ar", Portugal: "pt", Netherlands: "nl", Belgium: "be", Croatia: "hr", Uruguay: "uy", Denmark: "dk", Sweden: "se", Norway: "no", Finland: "fi", Switzerland: "ch", Austria: "at", Poland: "pl", Turkey: "tr", Morocco: "ma", USA: "us", Canada: "ca", Japan: "jp", "South Korea": "kr", Australia: "au", Mexico: "mx", Nigeria: "ng", Egypt: "eg", Cameroon: "cm", Scotland: "gb-sct", Wales: "gb-wls"
@@ -23,9 +21,8 @@ const FLAG_MAP = {
 
 
 
-// --- Main TeamPage Component ---
 export default function TeamPage() {
-  const { id } = useParams(); // team ID from route (using 'id' as per your original file)
+  const { id } = useParams();
   const [teamInfo, setTeamInfo] = useState(null);
   const [squad, setSquad] = useState([]);
   const [statistics, setStatistics] = useState(null);
@@ -35,7 +32,7 @@ export default function TeamPage() {
 
   const leagueId = localStorage.getItem("selectedLeagueId") || 39;
   
-  // A map to get the display name of the league for the news title
+
   const LEAGUE_DISPLAY_NAMES = {
     39: "Premier League", 140: "La Liga", 78: "Bundesliga", 61: "Ligue 1", 135: "Serie A", 2: "Champions League",
   };
@@ -46,7 +43,7 @@ export default function TeamPage() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Use Promise.allSettled to prevent one failed API call from blocking the entire page render
+      
         const results = await Promise.allSettled([
           getTeamInfo(id),
           getTeamSquad(id),
@@ -58,7 +55,7 @@ export default function TeamPage() {
         const getFulfilledData = (result) => 
             result.status === 'fulfilled' ? result.value : null;
 
-        // Log rejected promises to help debug which specific API call failed
+       
         results.forEach((result, index) => {
             if (result.status === 'rejected') {
                 const apiName = ['TeamInfo', 'Squad', 'Stats', 'Coach', 'Transfers', 'Fixtures'][index];
@@ -73,7 +70,7 @@ export default function TeamPage() {
         
 
       } catch (err) {
-        // Catch block will only be hit if Promise.allSettled fails itself
+        
         console.error("Error fetching team data:", err);
       } finally {
         setLoading(false);
@@ -89,7 +86,7 @@ export default function TeamPage() {
   if (!teamInfo)
     return <p className="text-gray-400 text-center mt-10">No team data found. Check Team ID or API key configuration.</p>;
 
-  // Filter squad by position
+  
   const filteredSquad =
     sortPosition === "All"
       ? squad
@@ -100,7 +97,7 @@ export default function TeamPage() {
   return (
     <div className="max-w-6xl mx-auto p-6 text-white bg-neutral-900 min-h-screen">
         
-      {/* Team Info */}
+      
       <div className="flex items-center gap-6 mb-8 bg-neutral-800 p-6 rounded-xl shadow-lg border border-gray-700">
         <img
           src={teamInfo.team?.logo}
@@ -118,8 +115,7 @@ export default function TeamPage() {
           </p>
         </div>
       </div>
-      
-      {/* --- Coach Section --- */}
+    
       {coach && (
         <div className="bg-neutral-900 rounded-xl p-6 shadow-md mb-10 border border-gray-700">
           <h2 className="text-2xl font-semibold border-b border-gray-700 pb-2 mb-4 text-yellow-400">
@@ -146,7 +142,7 @@ export default function TeamPage() {
       
       <hr className="border-gray-700 my-8"/>
 
-      {/* --- Squad Section --- */}
+      
       <div className="bg-neutral-900 rounded-xl p-6 shadow-md mb-10 border border-gray-700">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold border-b border-gray-700 pb-2 text-yellow-400">
@@ -223,18 +219,18 @@ export default function TeamPage() {
         </div>
       </div>
       
-      {/* --- News Sections (New) --- */}
+     
       <hr className="border-gray-700 my-8"/>
 
       <div className="space-y-10">
-        {/* Team-Specific News */}
+        
         <NewsDisplay
           title={`${teamInfo.team?.name} News`}
           fetchFunction={getTeamNewsByName}
           fetchParam={teamInfo.team?.name}
         />
 
-        {/* League-Specific News */}
+    
         <NewsDisplay
           title={`${leagueName} News`}
           fetchFunction={getLeagueNewsById}

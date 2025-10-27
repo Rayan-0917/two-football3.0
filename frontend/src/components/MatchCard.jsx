@@ -9,7 +9,7 @@ export default function MatchCard({ match }) {
     match.status === "ET";
 
   return (
-    // UPDATED CSS: More padding, sharper corners, border on hover
+    
     <div onClick={()=>navigate(`/match/${match.id}`)}
       className="grid grid-cols-3 items-center bg-neutral-800 p-4 rounded-xl hover:bg-neutral-700 transition duration-200 cursor-pointer text-sm font-semibold border border-neutral-700 hover:border-green-500"
     >
@@ -21,12 +21,12 @@ export default function MatchCard({ match }) {
 
       {/* Center: Score + Minute/Status */}
       <div className="text-center flex flex-col items-center">
-        {/* UPDATED CSS: Score color adjusted */}
+        
         <p className={`text-xl font-extrabold ${isLive ? "text-green-400" : "text-gray-100"}`}>
           {match.score}
         </p>
         {isLive ? (
-          // UPDATED CSS: Sharper live indicator
+         
           <p className="text-[10px] text-green-400 font-bold bg-green-900/50 px-2 py-0.5 rounded-full animate-pulse mt-1">
             {match.minute}’
           </p>

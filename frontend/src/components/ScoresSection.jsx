@@ -39,7 +39,7 @@ export default function ScoresSection() {
     fetchMatches(currentDate);
   }, [currentDate]);
 
-  // ✅ Group matches by league
+ 
   const groupedByLeague = matches.reduce((acc, match) => {
     const leagueName = match.league.name;
     if (!acc[leagueName]) acc[leagueName] = [];
@@ -48,24 +48,24 @@ export default function ScoresSection() {
   }, {});
 
   return (
-    // UPDATED CSS: Brighter shadow, more defined background
+    
     <section className="flex-1 bg-neutral-800 text-white p-6 rounded-2xl shadow-xl border border-neutral-700 overflow-y-auto">
       {/* Date Navigation */}
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={goToYesterday}
-          // UPDATED CSS: Vibrant primary color hover
+         
           className="bg-neutral-700 text-gold-400 p-2 rounded-full hover:bg-neutral-600 transition duration-200"
         >
           <span className="text-lg font-bold">◀</span>
         </button>
-        {/* UPDATED CSS: Title highlight */}
+        
         <h2 className="text-xl font-extrabold text-gold-400">
           {displayDate(currentDate)} Fixtures
         </h2>
         <button
           onClick={goToTomorrow}
-          // UPDATED CSS: Vibrant primary color hover
+          
           className="bg-neutral-700 text-gold-400 p-2 rounded-full hover:bg-neutral-600 transition duration-200"
         >
           <span className="text-lg font-bold">▶</span>
@@ -79,7 +79,7 @@ export default function ScoresSection() {
       {!loading && matches.length > 0 ? (
         Object.entries(groupedByLeague).map(([leagueName, leagueMatches]) => (
           <div key={leagueName} className="mb-8 p-3 bg-neutral-900 rounded-xl shadow-inner border border-neutral-800">
-            {/* UPDATED CSS: Stronger league header */}
+           
             <h3 className="text-lg font-bold mb-3 border-b border-gold-500 pb-2 flex items-center gap-3 text-gray-100">
               <img
                 src={leagueMatches[0].league.logo}

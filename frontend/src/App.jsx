@@ -17,6 +17,7 @@ export default function App() {
         <Route path="/league/:leagueId" element={<LeaguePage/>}/>
         <Route path="/team/:id" element={<TeamPage/>}/>
         <Route path="/player/:id" element={<PlayerPage/>}/>
+        <Route path="/news" element={<NewsPage />} />
       </Routes>
     </div>
     

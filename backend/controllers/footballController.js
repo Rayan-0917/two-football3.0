@@ -30,11 +30,11 @@ export const getLeagueStandings = async (req, res) => {
   try {
     const apiResponse = await fetchAPI(`/standings?league=${leagueId}&season=${season}`);
     
-    // Check if the response is valid and extract necessary data
+    
     const leagueData = apiResponse[0]?.league;
     const standingsArray = leagueData?.standings[0] || [];
 
-    // FIX: Return an object containing both league info and the standings array.
+    
     res.json({
         standings: standingsArray,
         leagueInfo: leagueData ? {
@@ -105,9 +105,9 @@ export const getTeamStatistics = async (req, res) => {
 
 export const getPlayerDetails = async (req, res) => {
   const { playerId } = req.params;
-  const { season } = req.query; // season is optional, for current season stats
+  const { season } = req.query;
   try {
-    // The season parameter can be omitted to get general info, but is needed for stats.
+  
     const endpoint = season
       ? `/players?id=${playerId}&season=${season}`
       : `/players?id=${playerId}`;
@@ -122,7 +122,7 @@ export const getPlayerTransfers = async (req, res) => {
   const { playerId } = req.params;
   try {
     const data = await fetchAPI(`/transfers?player=${playerId}`);
-    // The API returns an array with one object per player, containing a 'transfers' array.
+ 
     res.json(data[0]?.transfers || []);
   } catch {
     res.status(500).json({ error: "Failed to fetch player transfers" });

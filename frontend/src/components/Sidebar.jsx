@@ -12,9 +12,9 @@ export default function Sidebar() {
   ];
 
   return (
-    // UPDATED CSS: Wider sidebar, deeper background, border
+
     <aside className="w-72 bg-neutral-800 text-white p-6 rounded-2xl shadow-xl border border-neutral-700">
-      {/* UPDATED CSS: Title highlight */}
+ 
       <h2 className="text-xl font-bold mb-4 border-b border-gold-500 pb-3 text-gold-400">
         Top Leagues
       </h2>
@@ -23,7 +23,7 @@ export default function Sidebar() {
           <Link
             key={league.id}
             to={`/league/${league.id}`}
-            // UPDATED CSS: Better hover and text color
+            
             className="flex items-center gap-4 hover:bg-neutral-700 p-3 rounded-lg cursor-pointer transition duration-200 group"
           >
             <img src={league.logo} alt={league.name} className="w-7 h-7 object-contain" />

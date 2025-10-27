@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPlayerDetails, getPlayerTransfers, getPlayerTrophies } from "../api/footballApi";
 
-// Import news API functions and NewsDisplay
-import { getPlayerNewsByName, getTeamNewsByName } from "../api/newsApi"; // Assuming newsApi.js is in "../api/"
-import NewsDisplay from "../components/NewsDisplay"; // Assuming NewsDisplay.jsx is in "../components/"
+
+import { getPlayerNewsByName, getTeamNewsByName } from "../api/newsApi";
+import NewsDisplay from "../components/NewsDisplay";
 
 export default function PlayerPage() {
   const { id } = useParams();
@@ -12,7 +12,7 @@ export default function PlayerPage() {
   const [transfers, setTransfers] = useState([]);
   const [trophies, setTrophies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const CURRENT_SEASON = 2023; // Define current season
+  const CURRENT_SEASON = 2023; 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +25,7 @@ export default function PlayerPage() {
 
         setPlayerData(details);
         setTransfers(playerTransfers);
-        // FIX 1: Set the trophies state
+        
         setTrophies(playerTrophies || []); 
       } catch (error) {
         console.error("Error fetching player data:", error);
@@ -40,26 +40,25 @@ export default function PlayerPage() {
   if (!playerData || !playerData.player) return <p className="text-center p-6 text-white">Player not found</p>;
 
   const { player, statistics } = playerData;
-  const seasonStats = statistics[0]; // Current season stats
+  const seasonStats = statistics[0]; 
 
-  // --- Data Processing for Career Overview (Using Transfers) ---
+  
   const clubHistory = new Map();
 
-  // 1. Add current club (from seasonStats)
+
   if (seasonStats) {
       clubHistory.set(seasonStats.team.id, {
-          id: seasonStats.team.id, // Include ID for the Link component
+          id: seasonStats.team.id,
           name: seasonStats.team.name,
           logo: seasonStats.team.logo,
           years: [seasonStats.league.season],
       });
   }
 
-  // 2. Process Transfers to get all clubs played for
+
   transfers.forEach((transfer) => {
     const year = new Date(transfer.date).getFullYear();
 
-    // Club 'OUT'
     if (transfer.teams.out.id && !clubHistory.has(transfer.teams.out.id)) {
         clubHistory.set(transfer.teams.out.id, {
             id: transfer.teams.out.id,
@@ -73,7 +72,7 @@ export default function PlayerPage() {
         if (club && !club.years.includes(year)) club.years.push(year);
     }
     
-    // Club 'IN'
+   
     if (transfer.teams.in.id && !clubHistory.has(transfer.teams.in.id)) {
         clubHistory.set(transfer.teams.in.id, {
             id: transfer.teams.in.id,
@@ -88,7 +87,7 @@ export default function PlayerPage() {
     }
   });
 
-  // Convert map to sorted array with year range
+  
   const careerClubs = Array.from(clubHistory.values()).map(club => {
     club.years.sort((a, b) => a - b);
     const minYear = club.years[0];
@@ -99,26 +98,26 @@ export default function PlayerPage() {
         range: minYear === maxYear ? `${minYear}` : `${minYear}–${maxYear}`,
     };
   }).sort((a, b) => {
-    // Sort by the earliest year (first element in the sorted years array)
+   
     const yearA = a.years[0] || Infinity;
     const yearB = b.years[0] || Infinity;
     return yearA - yearB;
   });
 
-  // Round rating to 2 decimal places if available
+  
   const rating =
     seasonStats?.games?.rating && !isNaN(seasonStats.games.rating)
       ? parseFloat(seasonStats.games.rating).toFixed(2)
       : "-";
 
-  // --- Trophies Aggregation FIX 2 ---
+
   const aggregatedTrophies = Object.values(
     trophies.reduce((acc, trophy) => {
-      // Use a unique key based on the tournament name and country
+    
       const key = `${trophy.league}_${trophy.country}`; 
       if (!acc[key]) {
         acc[key] = { 
-            name: trophy.league, // Use 'league' for trophy name as per API
+            name: trophy.league, 
             country: trophy.country,
             count: 0 
         };
@@ -130,7 +129,7 @@ export default function PlayerPage() {
 
   return (
     <div className="min-h-screen bg-neutral-900 text-white p-4 sm:p-6 md:p-8">
-      {/* Header */}
+  
       <div className="flex flex-col bg-neutral-800 items-center mb-8 p-6 rounded-xl shadow-lg border border-neutral-700">
         <img
           src={player.photo}
@@ -148,7 +147,7 @@ export default function PlayerPage() {
         </div>
       </div>
 
-      {/* Current Club (If available) */}
+     
       {seasonStats && (
         <div className="bg-neutral-800 p-5 rounded-xl shadow-md mb-8 border border-neutral-700">
           <h2 className="text-xl font-semibold mb-3 border-b border-neutral-700 pb-2 text-yellow-400">
@@ -168,7 +167,7 @@ export default function PlayerPage() {
         </div>
       )}
 
-      {/* Season Stats (If available) */}
+     
       {seasonStats && (
         <div className="bg-neutral-800 p-5 rounded-xl shadow-md mb-8 border border-neutral-700">
           <h2 className="text-xl font-semibold mb-4 border-b border-neutral-700 pb-2 text-yellow-400">
@@ -187,22 +186,22 @@ export default function PlayerPage() {
         </div>
       )}
 
-      {/* Career Overview (Clubs and National Team) */}
+
       <div className="bg-neutral-800 p-5 rounded-xl shadow-md mb-8 border border-neutral-700">
         <h2 className="text-xl font-semibold mb-4 border-b border-neutral-700 pb-2 text-yellow-400">
           Career Overview
         </h2>
         <ul className="space-y-4">
-          {/* National Team (Hardcoded for simplicity) */}
+          
           <li key="national-team-career" className="flex items-center gap-3 text-sm p-2 bg-neutral-700/50 rounded-lg border-l-4 border-blue-500">
               <span className="w-6 h-6 flex items-center justify-center text-xl">
-                  {/* Placeholder for Flag - consider using a flag library */} ⚽
+                  ⚽
               </span>
               <span className="font-medium flex-1 text-blue-300">{player.nationality} National Team</span>
               <span className="text-gray-400 text-xs">International</span>
           </li>
           
-          {/* Club History (From Transfers + Current) */}
+         
           {careerClubs.map((club) => (
             <Link to={`/team/${club.id}`} key={club.id} className="flex items-center gap-3 text-sm p-2 hover:bg-neutral-700 rounded-lg transition-colors duration-150 border-l-4 border-transparent">
               <img src={club.logo} alt={club.name} className="w-6 h-6 object-contain" />
@@ -220,7 +219,7 @@ export default function PlayerPage() {
         </h2>
         {transfers.length > 0 ? (
           <ul className="space-y-3">
-            {transfers.slice(0, 5).map((transfer, idx) => ( // Show top 5 transfers
+            {transfers.slice(0, 5).map((transfer, idx) => ( 
               <li key={transfer.date + transfer.teams.in.id + idx} className="flex items-center justify-between text-sm p-1 border-b border-neutral-700 last:border-b-0">
                 <span className="font-medium text-gray-300 w-1/4">
                   {new Date(transfer.date).toLocaleDateString()}
@@ -253,7 +252,7 @@ export default function PlayerPage() {
         {aggregatedTrophies.length > 0 ? (
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {aggregatedTrophies.map((trophy, idx) => (
-              // FIX 2: Use a unique key based on the aggregated data
+          
               <li key={`${trophy.name}-${trophy.country}`} className="flex items-center text-sm p-3 bg-neutral-700 rounded-lg">
                 <span className="font-bold text-lg text-yellow-500 mr-3">🏆</span>
                 <span className="flex-1">{trophy.name} ({trophy.country})</span>
@@ -266,7 +265,7 @@ export default function PlayerPage() {
         )}
       </div>
       
-      {/* Player News (New Feature - FIX 3) */}
+    
       <div className="mt-8 space-y-8">
         <NewsDisplay
           title={`${player.name} News`}
@@ -286,7 +285,7 @@ export default function PlayerPage() {
   );
 }
 
-// Helper components for clean design
+
 function Stat({ label, value }) {
   return (
     <div className="bg-neutral-700 rounded-lg p-3 border border-neutral-600">

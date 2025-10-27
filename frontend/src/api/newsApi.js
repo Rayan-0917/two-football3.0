@@ -1,6 +1,6 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
 
-// Fetch general football news
+
 export const getFootballNews = async () => {
   try {
     const res = await fetch(`${BACKEND_URL}/api/news/football`);
@@ -12,7 +12,7 @@ export const getFootballNews = async () => {
   }
 };
 
-// Fetch news for a specific league by ID
+
 export const getLeagueNewsById = async (leagueId) => {
   try {
     const res = await fetch(`${BACKEND_URL}/api/news/league/${leagueId}`);
@@ -24,7 +24,7 @@ export const getLeagueNewsById = async (leagueId) => {
   }
 };
 
-// NEW: Fetch news for a specific team by Name
+
 export const getTeamNewsByName = async (teamName) => {
     try {
         const res = await fetch(`${BACKEND_URL}/api/news/team/${encodeURIComponent(teamName)}`);
@@ -36,7 +36,7 @@ export const getTeamNewsByName = async (teamName) => {
     }
 };
 
-// NEW: Fetch news for a specific player by Name
+
 export const getPlayerNewsByName = async (playerName) => {
     try {
         const res = await fetch(`${BACKEND_URL}/api/news/player/${encodeURIComponent(playerName)}`);

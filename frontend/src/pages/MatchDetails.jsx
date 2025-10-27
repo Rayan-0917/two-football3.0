@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getMatchDetails } from "../api/footballApi";
 
-// Helper function to generate player photo URL
+
 const getPlayerPhotoUrl = (playerId) => {
     return `https://media.api-sports.io/football/players/${playerId}.png`;
 };
 
-// Component to render a single player in the list
 const PlayerListItem = ({ player, isHomeTeam }) => {
     const linkColor = isHomeTeam ? 'text-blue-400 hover:text-blue-300' : 'text-red-400 hover:text-red-300';
     const numberBg = isHomeTeam ? 'bg-blue-600' : 'bg-red-600';
@@ -31,7 +30,7 @@ const PlayerListItem = ({ player, isHomeTeam }) => {
     );
 };
 
-// Component to render the full list of lineups (Starting XI)
+
 const LineupList = ({ lineups, homeId, awayId }) => {
     if (!lineups || lineups.length < 2) return null;
 
@@ -41,7 +40,7 @@ const LineupList = ({ lineups, homeId, awayId }) => {
     const homePlayers = homeLineup?.startXI.map(p => p.player) || [];
     const awayPlayers = awayLineup?.startXI.map(p => p.player) || [];
     
-    // Sort by position/number for better readability (optional, but helpful)
+    
     homePlayers.sort((a, b) => (a.number || 99) - (b.number || 99));
     awayPlayers.sort((a, b) => (a.number || 99) - (b.number || 99));
 
