@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 const allowedOrigins = [
-  "https://two-football3-0.vercel.app",
+  "https://two-football3-0-21yfl3ois-rayan-0917s-projects.vercel.app",
   "http://localhost:5173", // for local dev
 ];
 
