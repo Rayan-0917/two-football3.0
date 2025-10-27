@@ -5,6 +5,7 @@ import MatchDetails from "./pages/MatchDetails";
 import LeaguePage from "./pages/LeaguePage";
 import TeamPage from "./pages/TeamPage";
 import PlayerPage from "./pages/PlayerPage";
+import NewsPage from "./pages/NewsPage";
 
 
 export default function App() {
